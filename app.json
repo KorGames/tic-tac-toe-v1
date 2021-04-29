@@ -1,6 +1,6 @@
 {
   "expo": {
-    "name": "is-tic-tac-toe",
+    "name": "IS Tic Tac Toe",
     "slug": "is-tic-tac-toe",
     "version": "1.0.0",
     "orientation": "portrait",
@@ -13,13 +13,15 @@
     "updates": {
       "fallbackToCacheTimeout": 0
     },
-    "assetBundlePatterns": [
-      "**/*"
-    ],
+    "assetBundlePatterns": ["**/*"],
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": false,
+      "bundleIdentifier": "is.digital.tic-tac-toe",
+      "buildNumber": "0"
     },
     "android": {
+      "package": "is.digital.tic_tac_toe",
+      "versionCode": 0,
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#FFFFFF"
