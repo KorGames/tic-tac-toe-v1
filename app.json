@@ -17,11 +17,11 @@
     "ios": {
       "supportsTablet": false,
       "bundleIdentifier": "is.digital.tic-tac-toe",
-      "buildNumber": "0"
+      "buildNumber": "1"
     },
     "android": {
       "package": "is.digital.tic_tac_toe",
-      "versionCode": 0,
+      "versionCode": 1,
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#FFFFFF"
