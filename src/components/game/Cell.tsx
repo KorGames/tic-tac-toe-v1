@@ -1,26 +1,46 @@
-import React, { Dispatch } from "react";
-import { Pressable, PressableProps } from "react-native";
+import React from "react";
 import { FontAwesome } from "@expo/vector-icons";
-import { colors } from "style";
+import { Icon, Pressable } from "native-base";
 
-interface Props extends PressableProps {
+interface Props {
   value: "X" | "O" | null;
+  onPress: () => void;
 }
 
 const Cell: React.FC<Props> = (props) => {
-  const { value } = props;
+  const { value, onPress } = props;
 
   const getIcon = (value: null | "X" | "O") => {
     if (value === "X") {
-      return <FontAwesome name="close" size={60} color={colors.secondary} />;
+      return (
+        <Icon as={FontAwesome} name="close" size="3xl" color="primary.500" />
+      );
     } else if (value === "O") {
-      return <FontAwesome name="circle-o" size={60} color={colors.primary} />;
+      return (
+        <Icon
+          as={FontAwesome}
+          name="circle-o"
+          size="2xl"
+          color="secondary.500"
+        />
+      );
     } else {
       return null;
     }
   };
 
-  return <Pressable {...props}>{getIcon(value)}</Pressable>;
+  return (
+    <Pressable
+      flex={1}
+      onPress={onPress}
+      borderRadius={10}
+      backgroundColor="tertiary.700"
+      justifyContent="center"
+      alignItems="center"
+    >
+      {getIcon(value)}
+    </Pressable>
+  );
 };
 
 export default Cell;

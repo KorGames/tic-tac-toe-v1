@@ -1,7 +1,6 @@
 import React, { SetStateAction, useState, Dispatch } from "react";
-import { Pressable, StyleSheet, View } from "react-native";
+import { Box, Icon, Pressable } from "native-base";
 import { FontAwesome } from "@expo/vector-icons";
-import { colors } from "style";
 
 interface Props {
   value: "X" | "O";
@@ -13,54 +12,43 @@ const XOSwitch: React.FC<Props> = (props) => {
 
   return (
     <Pressable
-      style={styles.container}
+      flexDirection="row"
+      borderWidth={5}
+      borderColor="primary.500"
+      borderRadius={50}
+      height={60}
       onPress={() => onPress((prevState) => (prevState === "O" ? "X" : "O"))}
     >
-      <View
-        style={[
-          styles.value,
-          value === "X" && { backgroundColor: colors.secondary },
-        ]}
+      <Box
+        justifyContent="center"
+        alignItems="center"
+        borderRadius={50}
+        width={50}
+        height={50}
+        backgroundColor={value === "X" ? "primary.500" : undefined}
       >
-        <FontAwesome
+        <Icon
+          as={FontAwesome}
           name="close"
-          size={30}
-          color={value === "X" ? colors.white : colors.secondary}
+          color={value === "X" ? "white" : "primary.500"}
         />
-      </View>
-      <View
-        style={[
-          styles.value,
-          value === "O" && { backgroundColor: colors.primary },
-        ]}
+      </Box>
+      <Box
+        justifyContent="center"
+        alignItems="center"
+        borderRadius={50}
+        width={50}
+        height={50}
+        backgroundColor={value === "O" ? "primary.500" : undefined}
       >
-        <FontAwesome
+        <Icon
+          as={FontAwesome}
           name="circle-o"
-          size={30}
-          color={value === "O" ? colors.white : colors.primary}
+          color={value === "O" ? "white" : "secondary.500"}
         />
-      </View>
+      </Box>
     </Pressable>
   );
 };
 
 export default XOSwitch;
-
-const styles = StyleSheet.create({
-  container: {
-    flexDirection: "row",
-    borderWidth: 3,
-    borderColor: colors.light,
-    borderRadius: 23,
-  },
-  value: {
-    justifyContent: "center",
-    alignItems: "center",
-    width: 40,
-    height: 40,
-    borderRadius: 20,
-  },
-  selected: {
-    backgroundColor: colors.secondary,
-  },
-});

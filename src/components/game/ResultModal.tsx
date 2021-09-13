@@ -1,8 +1,7 @@
 import React from "react";
-import { Modal, StyleSheet, TouchableOpacity } from "react-native";
-import { Button, Surface, Text, Title } from "react-native-paper";
 import { colors } from "style";
 import { FontAwesome } from "@expo/vector-icons";
+import { Heading, Icon, Modal, Text } from "native-base";
 
 interface Props {
   visible: boolean;
@@ -13,70 +12,44 @@ interface Props {
 const ResultModal: React.FC<Props> = (props) => {
   const { visible, hideModal, winner } = props;
   return (
-    <Modal
-      visible={visible}
-      onRequestClose={hideModal}
-      transparent
-      animationType="slide"
-    >
-      <TouchableOpacity onPress={hideModal} style={styles.centeredView}>
-        <Surface style={styles.modalView}>
+    <Modal isOpen={visible} onClose={hideModal} size="md">
+      <Modal.Content backgroundColor="tertiary.700" borderRadius={10}>
+        <Modal.Body alignItems="center">
           {winner ? (
             winner === "X" ? (
-              <FontAwesome name="close" size={75} color={colors.secondary} />
+              <Icon
+                as={FontAwesome}
+                name="close"
+                size="3xl"
+                color="primary.500"
+              />
             ) : (
-              <FontAwesome name="circle-o" size={75} color={colors.primary} />
+              <Icon
+                as={FontAwesome}
+                name="circle-o"
+                size="3xl"
+                color="secondary.500"
+              />
             )
           ) : (
-            <FontAwesome
+            <Icon
+              as={FontAwesome}
               name="balance-scale"
-              size={75}
-              color={colors.tertiary}
+              size="3xl"
+              color="light.500"
             />
           )}
           {winner ? (
-            <Text
-              style={{
-                ...styles.text,
-                color: winner === "O" ? colors.primary : colors.secondary,
-              }}
-            >
+            <Heading color={winner === "X" ? "primary.500" : "secondary.500"}>
               WINS
-            </Text>
+            </Heading>
           ) : (
-            <Text style={{ ...styles.text, color: colors.tertiary }}>DRAW</Text>
+            <Heading color="light.500">DRAW</Heading>
           )}
-        </Surface>
-      </TouchableOpacity>
+        </Modal.Body>
+      </Modal.Content>
     </Modal>
   );
 };
 
 export default ResultModal;
-
-const styles = StyleSheet.create({
-  centeredView: {
-    flex: 1,
-    justifyContent: "center",
-    alignItems: "center",
-  },
-  modalView: {
-    borderRadius: 20,
-    padding: 20,
-    alignItems: "center",
-    elevation: 3,
-    //   shadowColor: "#000",
-    //   shadowOffset: {
-    //     width: 0,
-    //     height: 2,
-    //   },
-    //   shadowOpacity: 0.25,
-    //   shadowRadius: 4,
-    //   elevation: 5,
-  },
-  text: {
-    fontSize: 30,
-    marginVertical: 10,
-    fontWeight: "bold",
-  },
-});

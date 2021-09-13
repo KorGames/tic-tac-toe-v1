@@ -1,13 +1,12 @@
 import React, { Dispatch, SetStateAction, useEffect, useState } from "react";
-import { View, StyleSheet, Pressable } from "react-native";
-import { Text } from "react-native-paper";
+import { View, StyleSheet } from "react-native";
 import { colors } from "style";
-import { FontAwesome } from "@expo/vector-icons";
 import Cell from "./Cell";
 import { BoardProp } from "utils/interfaces";
+import { HStack, VStack } from "native-base";
 
 interface Props {
-  board: any;
+  board: BoardProp;
   setBoard: Dispatch<SetStateAction<BoardProp>>;
   turn: "X" | "O";
 }
@@ -23,63 +22,29 @@ const Board: React.FC<Props> = (props) => {
   };
 
   return (
-    <View style={styles.container}>
-      <View style={styles.row}>
-        <Cell
-          value={board[0]}
-          onPress={() => handlePress(0)}
-          style={styles.cell}
-        />
-        <Cell
-          onPress={() => handlePress(1)}
-          value={board[1]}
-          style={{ ...styles.cell, ...styles.verticalBorder }}
-        />
-        <Cell
-          onPress={() => handlePress(2)}
-          value={board[2]}
-          style={styles.cell}
-        />
-      </View>
-      <View style={styles.row}>
-        <Cell
-          onPress={() => handlePress(3)}
-          value={board[3]}
-          style={{ ...styles.cell, ...styles.horizontaBorder }}
-        />
-        <Cell
-          onPress={() => handlePress(4)}
-          value={board[4]}
-          style={{
-            ...styles.cell,
-            ...styles.horizontaBorder,
-            ...styles.verticalBorder,
-          }}
-        />
-        <Cell
-          onPress={() => handlePress(5)}
-          value={board[5]}
-          style={{ ...styles.cell, ...styles.horizontaBorder }}
-        />
-      </View>
-      <View style={styles.row}>
-        <Cell
-          onPress={() => handlePress(6)}
-          value={board[6]}
-          style={styles.cell}
-        />
-        <Cell
-          onPress={() => handlePress(7)}
-          value={board[7]}
-          style={{ ...styles.cell, ...styles.verticalBorder }}
-        />
-        <Cell
-          onPress={() => handlePress(8)}
-          value={board[8]}
-          style={styles.cell}
-        />
-      </View>
-    </View>
+    <VStack
+      space={5}
+      flex={1}
+      backgroundColor="tertiary.800"
+      padding={5}
+      borderRadius={10}
+    >
+      <HStack space={5} flex={1}>
+        <Cell onPress={() => handlePress(0)} value={board[0]} />
+        <Cell onPress={() => handlePress(1)} value={board[1]} />
+        <Cell onPress={() => handlePress(2)} value={board[2]} />
+      </HStack>
+      <HStack space={5} flex={1}>
+        <Cell onPress={() => handlePress(3)} value={board[3]} />
+        <Cell onPress={() => handlePress(4)} value={board[4]} />
+        <Cell onPress={() => handlePress(5)} value={board[5]} />
+      </HStack>
+      <HStack space={5} flex={1}>
+        <Cell onPress={() => handlePress(6)} value={board[6]} />
+        <Cell onPress={() => handlePress(7)} value={board[7]} />
+        <Cell onPress={() => handlePress(8)} value={board[8]} />
+      </HStack>
+    </VStack>
   );
 };
 

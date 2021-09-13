@@ -1,21 +1,12 @@
+import { NativeBaseProvider } from "native-base";
+import { MainNav } from "navigation";
 import React from "react";
-import { StyleSheet, Text, View } from "react-native";
-import { GameScreen } from "screens";
-import { Provider as PaperProvider } from "react-native-paper";
+import { theme } from "style";
 
 export default function App() {
   return (
-    <PaperProvider>
-      <GameScreen />
-    </PaperProvider>
+    <NativeBaseProvider theme={theme}>
+      <MainNav />
+    </NativeBaseProvider>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: "#fff",
-    alignItems: "center",
-    justifyContent: "center",
-  },
-});

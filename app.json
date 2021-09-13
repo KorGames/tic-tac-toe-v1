@@ -1,7 +1,7 @@
 {
   "expo": {
-    "name": "IS Tic Tac Toe",
-    "slug": "is-tic-tac-toe",
+    "name": "Play Tic Tac Toe Classic",
+    "slug": "tic-tac-toe",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
@@ -16,11 +16,14 @@
     "assetBundlePatterns": ["**/*"],
     "ios": {
       "supportsTablet": false,
-      "bundleIdentifier": "is.digital.tic-tac-toe",
-      "buildNumber": "1"
+      "bundleIdentifier": "digital.korol.tic-tac-toe",
+      "buildNumber": "1",
+      "config": {
+        "googleMobileAdsAppId": "ca-app-pub-7199910147118397~7218629091"
+      }
     },
     "android": {
-      "package": "is.digital.tic_tac_toe",
+      "package": "digital.korol.tic_tac_toe",
       "versionCode": 1,
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",

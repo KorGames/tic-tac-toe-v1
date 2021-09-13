@@ -1,13 +1,15 @@
 import { Layout } from "components/common";
 import React, { useState, useEffect, useRef } from "react";
-import { Text, Button } from "react-native-paper";
-import { View, StyleSheet, Pressable, TouchableOpacity } from "react-native";
 import { FontAwesome } from "@expo/vector-icons";
-import { colors } from "style";
 import { GameBoard, ResultModal, XOSwitch } from "components/game";
 import { BoardProp } from "utils/interfaces";
+import { Box, HStack, Icon, IconButton, Text, VStack } from "native-base";
+import { useNavigation } from "@react-navigation/core";
 
 const Game = () => {
+
+  const nav = useNavigation()
+
   const [oWins, setOWins] = useState(0);
   const [xWins, setXWins] = useState(0);
   const [draws, setDraws] = useState(0);
@@ -137,109 +139,51 @@ const Game = () => {
         hideModal={() => setShowResult(false)}
         winner={winner}
       />
-      <View style={styles.container}>
-        <View style={styles.resultsContainer}>
-          <View style={styles.result}>
-            <FontAwesome name="close" size={30} color={colors.secondary} />
-            <Text style={{ fontWeight: "bold", color: colors.secondary }}>
-              {xWins} wins
+      <VStack flex={1} padding={5}>
+        <HStack justifyContent="space-evenly">
+          <VStack alignItems="center">
+            <Icon as={FontAwesome} name="close" color="primary.500" />
+            <Text color="primary.500" bold>
+              {xWins} Wins
             </Text>
-          </View>
-          <View style={styles.result}>
-            <FontAwesome name="circle-o" size={30} color={colors.primary} />
-            <Text style={{ fontWeight: "bold", color: colors.primary }}>
-              {oWins} wins
+          </VStack>
+          <VStack alignItems="center">
+            <Icon as={FontAwesome} name="balance-scale" color="light.500" />
+            <Text color="light.500" bold>
+              {draws} Draws
             </Text>
-          </View>
-          <View style={styles.result}>
-            <FontAwesome
-              name="balance-scale"
-              size={30}
-              color={colors.tertiary}
-            />
-            <Text style={{ fontWeight: "bold", color: colors.tertiary }}>
-              {draws} draws
+          </VStack>
+          <VStack alignItems="center">
+            <Icon as={FontAwesome} name="circle-o" color="secondary.500" />
+            <Text color="secondary.500" bold>
+              {oWins} Wins
             </Text>
-          </View>
-        </View>
-        <View style={styles.gameContaier}>
+          </VStack>
+        </HStack>
+        <Box flex={1} paddingY={5}>
           <GameBoard board={board} setBoard={setBoard} turn={turn} />
-        </View>
-        <View style={styles.switchContainer}>
+        </Box>
+        <HStack justifyContent="space-evenly" alignItems="center">
+          <IconButton
+            variant="solid"
+            borderRadius={50}
+            padding={5}
+            icon={<Icon as={FontAwesome} name="home" />}
+            onPress={() => nav.navigate('Home')}
+          />
+
           <XOSwitch value={firstTurn} onPress={setFirstTurn} />
-        </View>
-        <View style={styles.controlsContainer}>
-          <TouchableOpacity onPress={clearBoard} style={styles.iconContainer}>
-            <View style={styles.iconInner}>
-              <FontAwesome name="refresh" size={40} color={colors.light} />
-            </View>
-          </TouchableOpacity>
-          <Button
-            uppercase={false}
-            labelStyle={{
-              fontWeight: "bold",
-              fontSize: 20,
-              color: colors.tertiary,
-            }}
-            style={{
-              borderWidth: 3,
-              borderColor: colors.light,
-              borderRadius: 40,
-            }}
-          >
-            IS TTT
-          </Button>
-          <TouchableOpacity style={styles.iconContainer}>
-            <View style={styles.iconInner}>
-              <FontAwesome name="gear" size={40} color={colors.light} />
-            </View>
-          </TouchableOpacity>
-        </View>
-      </View>
+          <IconButton
+            variant="solid"
+            borderRadius={50}
+            padding={5}
+            icon={<Icon as={FontAwesome} name="refresh" />}
+            onPress={clearBoard}
+          />
+        </HStack>
+      </VStack>
     </Layout>
   );
 };
 
 export default Game;
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    paddingVertical: 30,
-  },
-  resultsContainer: {
-    flexDirection: "row",
-    justifyContent: "space-evenly",
-  },
-  result: {
-    alignItems: "center",
-  },
-  gameContaier: {
-    flex: 1,
-    padding: 50,
-  },
-  switchContainer: {
-    alignItems: "center",
-  },
-  controlsContainer: {
-    flexDirection: "row",
-    justifyContent: "space-evenly",
-    alignItems: "center",
-  },
-  iconContainer: {
-    justifyContent: "center",
-    alignItems: "center",
-    borderColor: colors.light,
-    borderWidth: 2,
-    padding: 5,
-    borderRadius: 42,
-  },
-  iconInner: {
-    justifyContent: "center",
-    alignItems: "center",
-    backgroundColor: colors.tertiary,
-    width: 60,
-    height: 60,
-    borderRadius: 30,
-  },
-});
