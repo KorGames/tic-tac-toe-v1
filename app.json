@@ -17,14 +17,14 @@
     "ios": {
       "supportsTablet": false,
       "bundleIdentifier": "digital.korol.tic-tac-toe",
-      "buildNumber": "1",
+      "buildNumber": "2",
       "config": {
         "googleMobileAdsAppId": "ca-app-pub-7199910147118397~7218629091"
       }
     },
     "android": {
       "package": "digital.korol.tic_tac_toe",
-      "versionCode": 1,
+      "versionCode": 2,
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#FFFFFF"
