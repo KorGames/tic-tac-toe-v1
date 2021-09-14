@@ -17,9 +17,12 @@
     "ios": {
       "supportsTablet": false,
       "bundleIdentifier": "digital.korol.tic-tac-toe",
-      "buildNumber": "2",
+      "buildNumber": "3",
       "config": {
         "googleMobileAdsAppId": "ca-app-pub-7199910147118397~7218629091"
+      },
+      "infoPlist": {
+        "NSUserTrackingUsageDescription": "This identifier will be used to deliver personalized ads to you."
       }
     },
     "android": {

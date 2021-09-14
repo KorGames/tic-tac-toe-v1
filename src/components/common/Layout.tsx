@@ -13,6 +13,7 @@ const Layout: React.FC = (props) => {
         <AdMobBanner
           bannerSize="smartBannerPortrait"
           adUnitID={adUnitID} // Test ID, Replace with your-admob-unit-id
+          servePersonalizedAds // true or false
           onDidFailToReceiveAdWithError={(e) => console.log(e)}
         />
       </SafeAreaView>
