@@ -3,13 +3,16 @@ import { MainNav } from "navigation";
 import React, { useEffect } from "react";
 import { theme } from "style";
 import * as Admob from "expo-ads-admob";
+import "utils/firebase";
+import { Provider } from "react-redux";
+import { store } from "store/store";
 
 export default function App() {
   useEffect(() => {
     (async () => {
       try {
         const res = await Admob.getPermissionsAsync();
-        console.log(res);
+        // console.log(res);
         if (!res.granted && res.canAskAgain) {
           await Admob.requestPermissionsAsync();
         }
@@ -20,8 +23,10 @@ export default function App() {
   }, []);
 
   return (
-    <NativeBaseProvider theme={theme}>
-      <MainNav />
-    </NativeBaseProvider>
+    <Provider store={store}>
+      <NativeBaseProvider theme={theme}>
+        <MainNav />
+      </NativeBaseProvider>
+    </Provider>
   );
 }

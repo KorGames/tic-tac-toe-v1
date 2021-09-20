@@ -54,12 +54,14 @@ const theme = extendTheme({
   components: {
     Button: {
       baseStyle: {},
-      defaultProps: {},
+      defaultProps: {
+        size: "lg",
+      },
     },
     Icon: {
       baseStyle: {
-        textAlign: "center",
         color: "white",
+        textAlign: "center",
       },
     },
   },

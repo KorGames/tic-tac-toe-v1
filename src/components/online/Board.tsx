@@ -2,17 +2,10 @@ import React, { useEffect } from "react";
 
 import Cell from "./Cell";
 import { HStack, VStack } from "native-base";
-import { useAppSelector } from "store/store";
-import { checkWin } from "lib/board";
 
 interface Props {}
 
 const Board: React.FC<Props> = (props) => {
-  const {board} = useAppSelector(state => state.game)
-  useEffect(() => {
-    checkWin(board)
-  }, [board])
-
   return (
     <VStack
       space={5}

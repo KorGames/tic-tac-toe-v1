@@ -1,3 +1,5 @@
-export interface BoardProp {
-  [key: number]: null | "X" | "O";
-}
+export type BoardProp = CellProp[];
+
+type CellProp = "X" | "O" | null;
+
+export type PlayerSide = "X" | "O";

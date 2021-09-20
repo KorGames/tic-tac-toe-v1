@@ -1,126 +1,90 @@
 import { Layout } from "components/common";
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect, useRef, useCallback } from "react";
 import { FontAwesome } from "@expo/vector-icons";
 import { GameBoard, ResultModal, XOSwitch } from "components/game";
 import { BoardProp } from "utils/interfaces";
 import { Box, HStack, Icon, IconButton, Text, VStack } from "native-base";
-import { useNavigation } from "@react-navigation/core";
+import {
+  useFocusEffect,
+  useNavigation,
+  useRoute,
+} from "@react-navigation/core";
+import { getHardMove } from "lib/ai/hard";
+import { checkWin } from "lib/board";
+import { useAppDispatch, useAppSelector } from "store/store";
+import {
+  winnerSet,
+  cellSet,
+  turnSet,
+  boardReset,
+  resultReset,
+} from "store/slices/gameSlice";
+import { showResultModal } from "store/slices/modalSlice";
 
 const Game = () => {
+  const nav = useNavigation();
 
-  const nav = useNavigation()
-
-  const [oWins, setOWins] = useState(0);
-  const [xWins, setXWins] = useState(0);
-  const [draws, setDraws] = useState(0);
-
-  const [firstTurn, setFirstTurn] = useState<"X" | "O">("X");
-
-  const [board, setBoard] = useState<BoardProp>({
-    0: null,
-    1: null,
-    2: null,
-    3: null,
-    4: null,
-    5: null,
-    6: null,
-    7: null,
-    8: null,
-  });
-  const isBoardFull = !Object.values(board).some((x) => x === null);
-  const isBoardEmpty = !Object.values(board).some((x) => x !== null);
-
-  const [turn, setTurn] = useState<"O" | "X">("X");
-  const [showResult, setShowResult] = useState(false);
-  const [winner, setWinner] = useState<"O" | "X" | null>(null);
-
+  const { board, turn, result, winner } = useAppSelector((state) => state.game);
+  const dispatch = useAppDispatch();
+  const isBoardFull = board.every((cell) => cell);
+  const isBoardEmpty = board.every((cell) => !cell);
+  const route = useRoute();
+  const isAi = route.params && (route.params as any).ai;
+  // Switch turn
   useEffect(() => {
     if (!isBoardEmpty) {
-      setTurn((prevState) => (prevState === "O" ? "X" : "O"));
+      dispatch(turnSet(turn === "O" ? "X" : "O"));
     }
   }, [board]);
 
-  const clearBoard = () => {
-    setBoard({
-      0: null,
-      1: null,
-      2: null,
-      3: null,
-      4: null,
-      5: null,
-      6: null,
-      7: null,
-      8: null,
-    });
-    setTurn(firstTurn);
-  };
-
-  const setValueWins = (value: "O" | "X") => {
-    if (value === "O") {
-      setOWins((prevState) => prevState + 1);
-      setWinner("O");
-    } else {
-      setXWins((prevState) => prevState + 1);
-      setWinner("X");
-    }
-    clearBoard();
-  };
-
-  const checkWin = () => {
-    if (board[0]) {
-      if (board[0] === board[1] && board[1] === board[2]) {
-        setValueWins(board[0]);
-      } else if (board[0] === board[3] && board[3] === board[6]) {
-        setValueWins(board[0]);
-      } else if (board[0] === board[4] && board[4] === board[8]) {
-        setValueWins(board[0]);
-      }
-    }
-
-    if (board[1]) {
-      if (board[1] === board[4] && board[4] === board[7]) {
-        setValueWins(board[1]);
-      }
-    }
-
-    if (board[2]) {
-      if (board[2] === board[4] && board[4] === board[6]) {
-        setValueWins(board[2]);
-      } else if (board[2] === board[5] && board[5] === board[8]) {
-        setValueWins(board[2]);
-      }
-    }
-
-    if (board[3]) {
-      if (board[3] === board[4] && board[4] === board[5]) {
-        setValueWins(board[3]);
-      }
-    }
-
-    if (board[6]) {
-      if (board[6] === board[7] && board[7] === board[8]) {
-        setValueWins(board[6]);
-      }
-    }
-  };
-
-  const checkDraw = () => {
+  // Check terminal state
+  useEffect(() => {
     if (isBoardFull) {
-      setDraws((prevState) => prevState + 1);
-      setWinner(null);
-      clearBoard();
+      dispatch(winnerSet("draw"));
+    }
+    const win = checkWin(board);
+    if (win) {
+      dispatch(winnerSet(win));
+    }
+  }, [board]);
+
+  const handleAi = () => {
+    // Find available moves
+    let availableMoves: number[] = [];
+    board.forEach((item, index) => {
+      if (!item) {
+        availableMoves = [...availableMoves, index];
+      }
+    });
+
+    if (winner) {
+      return;
+    }
+
+    if (availableMoves && turn === "X") {
+      if (availableMoves.length > 7) {
+        dispatch(
+          cellSet({
+            id: availableMoves[
+              Math.floor(Math.random() * availableMoves.length)
+            ]!,
+            data: "X",
+          })
+        );
+      } else {
+        const aiMove = getHardMove(board, "X");
+        // console.log(aiMove);
+        dispatch(cellSet({ id: aiMove!, data: "X" }));
+      }
     }
   };
 
+  // Ai activated
   useEffect(() => {
-    checkDraw();
-    checkWin();
-  }, [board]);
-
-  useEffect(() => {
-    setTurn(firstTurn);
-    clearBoard();
-  }, [firstTurn]);
+    if (isAi) {
+      handleAi();
+    }
+  }, [turn]);
 
   const didMount = useRef(false);
 
@@ -128,40 +92,45 @@ const Game = () => {
     if (!didMount.current) {
       didMount.current = true;
     } else {
-      setShowResult(true);
+      dispatch(showResultModal(true));
     }
-  }, [winner, oWins, xWins, draws]);
+  }, [result]);
+
+  useFocusEffect(
+    useCallback(() => {
+      return () => {
+        dispatch(resultReset());
+        dispatch(boardReset());
+      };
+    }, [])
+  );
 
   return (
     <Layout>
-      <ResultModal
-        visible={showResult}
-        hideModal={() => setShowResult(false)}
-        winner={winner}
-      />
+      <ResultModal />
       <VStack flex={1} padding={5}>
         <HStack justifyContent="space-evenly">
           <VStack alignItems="center">
             <Icon as={FontAwesome} name="close" color="primary.500" />
             <Text color="primary.500" bold>
-              {xWins} Wins
+              {result.xWins} Wins
             </Text>
           </VStack>
           <VStack alignItems="center">
             <Icon as={FontAwesome} name="balance-scale" color="light.500" />
             <Text color="light.500" bold>
-              {draws} Draws
+              {result.draws} Draws
             </Text>
           </VStack>
           <VStack alignItems="center">
             <Icon as={FontAwesome} name="circle-o" color="secondary.500" />
             <Text color="secondary.500" bold>
-              {oWins} Wins
+              {result.oWins} Wins
             </Text>
           </VStack>
         </HStack>
         <Box flex={1} paddingY={5}>
-          <GameBoard board={board} setBoard={setBoard} turn={turn} />
+          <GameBoard />
         </Box>
         <HStack justifyContent="space-evenly" alignItems="center">
           <IconButton
@@ -169,16 +138,28 @@ const Game = () => {
             borderRadius={50}
             padding={5}
             icon={<Icon as={FontAwesome} name="home" />}
-            onPress={() => nav.navigate('Home')}
+            onPress={() => nav.navigate("Home" as any)}
           />
 
-          <XOSwitch value={firstTurn} onPress={setFirstTurn} />
+          <IconButton
+            variant="solid"
+            borderRadius={50}
+            padding={5}
+            icon={
+              <Icon
+                as={FontAwesome}
+                name={turn === "O" ? "circle-o" : "close"}
+              />
+            }
+            onPress={() => nav.navigate("Home" as any)}
+          />
+
           <IconButton
             variant="solid"
             borderRadius={50}
             padding={5}
             icon={<Icon as={FontAwesome} name="refresh" />}
-            onPress={clearBoard}
+            onPress={() => dispatch(boardReset())}
           />
         </HStack>
       </VStack>

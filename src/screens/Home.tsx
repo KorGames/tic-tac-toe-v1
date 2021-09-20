@@ -1,7 +1,7 @@
 import { Layout, Logo } from "components/common";
 import { Button, Icon, VStack } from "native-base";
 import React from "react";
-import { FontAwesome } from "@expo/vector-icons";
+import { FontAwesome5, FontAwesome } from "@expo/vector-icons";
 import { useNavigation } from "@react-navigation/native";
 
 const Home = () => {
@@ -16,17 +16,21 @@ const Home = () => {
       >
         <Logo />
         <Button
-          _text={{ fontSize: 30 }}
-          startIcon={<Icon as={FontAwesome} name="play" />}
-          onPress={() => nav.navigate("Game")}
+          startIcon={<Icon as={FontAwesome5} name="robot" />}
+          onPress={() => nav.navigate("Game", { ai: true })}
         >
           Single Play
         </Button>
         <Button
-          _text={{ fontSize: 20 }}
-          disabled
+          startIcon={<Icon as={FontAwesome5} name="user-friends" />}
+          onPress={() => nav.navigate("Game" as any)}
+        >
+          Two Players
+        </Button>
+        <Button
+          onPress={() => nav.navigate("WaitingRoom")}
           colorScheme="secondary"
-          startIcon={<Icon as={FontAwesome} name="users" />}
+          startIcon={<Icon as={FontAwesome5} name="users" />}
         >
           Play Online (Soon)
         </Button>

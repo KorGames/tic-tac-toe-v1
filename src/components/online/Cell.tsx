@@ -1,8 +1,10 @@
 import React from "react";
 import { FontAwesome } from "@expo/vector-icons";
-import { Icon, Pressable } from "native-base";
+import { Icon, Pressable, Spinner } from "native-base";
 import { useAppDispatch, useAppSelector } from "store/store";
 import { cellSet } from "store/slices/gameSlice";
+import firebase from "firebase";
+import { makeMove, switchTurn } from "lib/online";
 
 interface Props {
   id: number;
@@ -10,16 +12,26 @@ interface Props {
 
 const Cell: React.FC<Props> = (props) => {
   const { id } = props;
-  const { board, turn, winner } = useAppSelector((state) => state.game);
-  const dispatch = useAppDispatch();
+  const { room, user } = useAppSelector((state) => state.online);
 
-  const handlePress = () => {
+  const handlePress = async () => {
     // If cell is not available or game has ended
-    if (board[id] || winner) {
+    if (!room || !user) {
+      console.log("No room or user from cell");
+      return;
+    }
+    if (room.board[id]) {
+      console.log("Cell is not available");
       return;
     }
 
-    dispatch(cellSet({ id, data: turn }));
+    // If not user turn
+    if (room.players[room.turn] !== user) {
+      return;
+    }
+
+    await makeMove(room.id, id, room.turn);
+    await switchTurn(room);
   };
 
   const getIcon = (value: null | "X" | "O") => {
@@ -41,6 +53,21 @@ const Cell: React.FC<Props> = (props) => {
     }
   };
 
+  if (!room) {
+    return (
+      <Pressable
+        flex={1}
+        onPress={handlePress}
+        borderRadius={10}
+        backgroundColor="tertiary.700"
+        justifyContent="center"
+        alignItems="center"
+      >
+        <Spinner />
+      </Pressable>
+    );
+  }
+
   return (
     <Pressable
       flex={1}
@@ -50,7 +77,7 @@ const Cell: React.FC<Props> = (props) => {
       justifyContent="center"
       alignItems="center"
     >
-      {getIcon(board[id])}
+      {getIcon(room.board[id])}
     </Pressable>
   );
 };
