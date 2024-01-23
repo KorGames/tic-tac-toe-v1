@@ -1,36 +1,34 @@
-import React, { useEffect } from "react";
+import React from "react";
+import { View } from "react-native";
+import { Cell } from "./Cell";
 
-import Cell from "./Cell";
-import { HStack, VStack } from "native-base";
-
-interface Props {}
-
-const Board: React.FC<Props> = (props) => {
+export const Board = () => {
   return (
-    <VStack
-      space={5}
-      flex={1}
-      backgroundColor="tertiary.800"
-      padding={5}
-      borderRadius={10}
+    <View
+      style={{
+        flex: 1,
+        justifyContent: "center",
+        alignItems: "center",
+        flexDirection: "column",
+        width: "100%",
+        height: "100%",
+      }}
     >
-      <HStack space={5} flex={1}>
+      <View>
         <Cell id={0} />
         <Cell id={1} />
         <Cell id={2} />
-      </HStack>
-      <HStack space={5} flex={1}>
+      </View>
+      <View>
         <Cell id={3} />
         <Cell id={4} />
         <Cell id={5} />
-      </HStack>
-      <HStack space={5} flex={1}>
+      </View>
+      <View>
         <Cell id={6} />
         <Cell id={7} />
         <Cell id={8} />
-      </HStack>
-    </VStack>
+      </View>
+    </View>
   );
 };
-
-export default Board;

@@ -1,5 +1,5 @@
-export type BoardProp = CellProp[];
+export type IBoardValue = ICellValue[];
 
-type CellProp = "X" | "O" | null;
+export type ICellValue = IPlayerSide | null;
 
-export type PlayerSide = "X" | "O";
+export type IPlayerSide = "X" | "O";

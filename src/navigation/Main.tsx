@@ -1,12 +1,12 @@
 import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import React from "react";
-import {
-  HomeScreen,
-  GameScreen,
-  WaitingRoomScreen,
-  OnlineGameScreen,
-} from "screens";
+import { StatusBar } from "react-native";
+import { GameScreen } from "screens/GameScreen";
+import { HomeScreen } from "screens/HomeScreen";
+import { OnlineGameScreen } from "screens/OnlineGameScreen";
+import { WaitingRoomScreen } from "screens/WaitingRoomScreen";
+import { theme_tokens } from "utils/styles.utils";
 
 const Stack = createNativeStackNavigator();
 
@@ -15,7 +15,13 @@ const Main = () => {
     <NavigationContainer>
       <Stack.Navigator
         initialRouteName="Home"
-        screenOptions={{ headerShown: false }}
+        screenOptions={{
+          headerShown: false,
+          contentStyle: {
+            marginTop: StatusBar.currentHeight,
+            backgroundColor: theme_tokens.dark.main,
+          },
+        }}
       >
         <Stack.Screen name="Home" component={HomeScreen} />
         <Stack.Screen name="Game" component={GameScreen} />

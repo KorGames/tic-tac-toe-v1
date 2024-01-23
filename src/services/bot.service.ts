@@ -1,26 +1,24 @@
-import { checkWin, isBoardFull } from "lib/board";
-import { BoardProp } from "utils/interfaces";
+import { IBoardValue, IPlayerSide } from "utils/interfaces";
+import { board_service } from "./board.service";
 
-const minimax = (board: BoardProp, side: "X" | "O", depth: number) => {
+const minimax = (board: IBoardValue, side: IPlayerSide, depth: number) => {
   const isMax = !(depth % 2);
-  const win = checkWin(board);
-  if (win) {
-    if (isMax && win === side) {
+  const winner = board_service.calculate_winner(board);
+  if (winner) {
+    if (isMax && winner === side) {
       return 100 - depth;
-    } else if (!isMax && win !== side) {
+    } else if (!isMax && winner !== side) {
       return 100 - depth;
     } else {
       return depth - 100;
     }
   }
 
-  if (isBoardFull(board)) {
+  if (board_service.is_board_full(board)) {
     return 0;
   }
 
-  const availableMoves = board
-    .map((cell, index) => (!cell ? index : null))
-    .filter((item) => item !== null);
+  const availableMoves = board.map((cell, index) => (!cell ? index : null)).filter((item) => item !== null);
 
   if (isMax) {
     let best = -100;
@@ -47,10 +45,12 @@ const minimax = (board: BoardProp, side: "X" | "O", depth: number) => {
   }
 };
 
-export const getHardMove = (board: BoardProp, side: "X" | "O") => {
-  const availableMoves = board
-    .map((cell, index) => (!cell ? index : null))
-    .filter((item) => item !== null);
+export const calculate_next_move = (board: IBoardValue, side: IPlayerSide): number => {
+  const availableMoves = board.map((cell, index) => (!cell ? index : null)).filter((item) => item !== null) as number[];
+  const is_my_first_move = !board.some((c) => c === side);
+  if (is_my_first_move) {
+    return availableMoves[Math.floor(Math.random() * availableMoves.length)];
+  }
 
   let bestValue = 100;
   let bestMove = null;
@@ -67,5 +67,7 @@ export const getHardMove = (board: BoardProp, side: "X" | "O") => {
     // console.log(bestMove)
   }
   // console.log("\n");
-  return bestMove;
+  return bestMove || availableMoves[0];
 };
+
+export const bot_service = { calculate_next_move };

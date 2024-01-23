@@ -1,16 +1,16 @@
 import React from "react";
 import { FontAwesome } from "@expo/vector-icons";
-import { Icon, Pressable, Spinner } from "native-base";
 import { useAppDispatch, useAppSelector } from "store/store";
 import { cellSet } from "store/slices/gameSlice";
 import firebase from "firebase";
 import { makeMove, switchTurn } from "lib/online";
+import { Pressable } from "react-native";
 
 interface Props {
   id: number;
 }
 
-const Cell: React.FC<Props> = (props) => {
+export const Cell: React.FC<Props> = (props) => {
   const { id } = props;
   const { room, user } = useAppSelector((state) => state.online);
 
@@ -36,18 +36,9 @@ const Cell: React.FC<Props> = (props) => {
 
   const getIcon = (value: null | "X" | "O") => {
     if (value === "X") {
-      return (
-        <Icon as={FontAwesome} name="close" size="3xl" color="primary.500" />
-      );
+      return <FontAwesome name="close" />;
     } else if (value === "O") {
-      return (
-        <Icon
-          as={FontAwesome}
-          name="circle-o"
-          size="2xl"
-          color="secondary.500"
-        />
-      );
+      return <FontAwesome name="circle-o" />;
     } else {
       return null;
     }
@@ -56,30 +47,34 @@ const Cell: React.FC<Props> = (props) => {
   if (!room) {
     return (
       <Pressable
-        flex={1}
         onPress={handlePress}
-        borderRadius={10}
-        backgroundColor="tertiary.700"
-        justifyContent="center"
-        alignItems="center"
+        style={{
+          flex: 1,
+          justifyContent: "center",
+          alignItems: "center",
+          flexDirection: "column",
+          width: "100%",
+          height: "100%",
+        }}
       >
-        <Spinner />
+        {/* <Spinner /> */}
       </Pressable>
     );
   }
 
   return (
     <Pressable
-      flex={1}
       onPress={handlePress}
-      borderRadius={10}
-      backgroundColor="tertiary.700"
-      justifyContent="center"
-      alignItems="center"
+      style={{
+        flex: 1,
+        justifyContent: "center",
+        alignItems: "center",
+        flexDirection: "column",
+        width: "100%",
+        height: "100%",
+      }}
     >
       {getIcon(room.board[id])}
     </Pressable>
   );
 };
-
-export default Cell;

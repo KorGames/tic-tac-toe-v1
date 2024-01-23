@@ -1,24 +1,13 @@
 import { useFocusEffect, useNavigation } from "@react-navigation/core";
-import { Layout } from "components/common";
-import {
-  createRoom,
-  deleteRoom,
-  getAvailableRooms,
-  getRoom,
-  joinRoom,
-} from "lib/online";
-import { Button, Heading, HStack, Icon, Spinner, VStack } from "native-base";
-import React, { useState, useEffect, useCallback } from "react";
+import { createRoom, getAvailableRooms, getRoom, joinRoom } from "services/online";
+import React, { useState, useCallback } from "react";
 import { roomSet, userSet } from "store/slices/onlineSlice";
 import { useAppDispatch, useAppSelector } from "store/store";
-import "react-native-get-random-values";
-
-import { v4 as uuidv4 } from "uuid";
-import firebase from "firebase";
 import { FontAwesome5 } from "@expo/vector-icons";
-import exitRoom from "lib/online/exitRoom";
+import exitRoom from "services/online/exitRoom";
+import { View } from "react-native";
 
-const WaitingRoom = () => {
+export const WaitingRoomScreen = () => {
   const [timer, setTimer] = useState(0);
   const dispatch = useAppDispatch();
   const { user, room } = useAppSelector((state) => state.online);
@@ -34,11 +23,7 @@ const WaitingRoom = () => {
     if (roomAvaialable) {
       // If available join
       console.log("If available join");
-      await joinRoom(
-        roomAvaialable.id,
-        user!,
-        roomAvaialable.side as "X" | "O"
-      );
+      await joinRoom(roomAvaialable.id, user!, roomAvaialable.side as "X" | "O");
       const roomData = await getRoom(roomAvaialable.id);
       dispatch(roomSet(roomData));
     } else {
@@ -54,7 +39,8 @@ const WaitingRoom = () => {
       // Set user
       if (!user) {
         console.log("Set user");
-        const uid = uuidv4();
+        // const uid = uuidv4();
+        const uid = "uuidv4()";
         dispatch(userSet(uid));
       }
       // Check for room
@@ -72,15 +58,15 @@ const WaitingRoom = () => {
       let unsub = () => {};
       // Track real time updates of the room
       if (room) {
-        unsub = firebase
-          .firestore()
-          .collection("rooms")
-          .doc(room.id)
-          .onSnapshot((snap) => {
-            console.log("Update");
-            const data = snap.data();
-            dispatch(roomSet(data));
-          });
+        // unsub = firebase
+        //   .firestore()
+        //   .collection("rooms")
+        //   .doc(room.id)
+        //   .onSnapshot((snap) => {
+        //     console.log("Update");
+        //     const data = snap.data();
+        //     dispatch(roomSet(data));
+        //   });
       }
       return () => unsub();
     }, [room?.id])
@@ -125,8 +111,8 @@ const WaitingRoom = () => {
   );
 
   return (
-    <Layout>
-      <VStack flex={1} justifyContent="space-evenly">
+    <View>
+      {/* <VStack flex={1} justifyContent="space-evenly">
         <VStack
           backgroundColor="primary.500"
           width={150}
@@ -142,10 +128,7 @@ const WaitingRoom = () => {
         </VStack>
         <HStack justifyContent="space-evenly">
           <Heading>{timer}</Heading>
-          <Button
-            startIcon={<Icon as={FontAwesome5} name="arrow-left" />}
-            onPress={handleClose}
-          >
+          <Button startIcon={<Icon as={FontAwesome5} name="arrow-left" />} onPress={handleClose}>
             Close
           </Button>
         </HStack>
@@ -159,18 +142,12 @@ const WaitingRoom = () => {
           padding={5}
           alignSelf="center"
         >
-          {room && room.players[side === "X" ? "O" : "X"] ? (
-            <Icon as={FontAwesome5} name="user-secret" size="xl" />
-          ) : (
-            <Spinner />
-          )}
+          {room && room.players[side === "X" ? "O" : "X"] ? <Icon as={FontAwesome5} name="user-secret" size="xl" /> : <Spinner />}
           <Heading color="white" numberOfLines={1} adjustsFontSizeToFit>
             Opponent
           </Heading>
         </VStack>
-      </VStack>
-    </Layout>
+      </VStack> */}
+    </View>
   );
 };
-
-export default WaitingRoom;

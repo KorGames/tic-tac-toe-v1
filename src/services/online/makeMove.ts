@@ -1,15 +1,15 @@
-import firebase from "firebase";
+import { doc, getDoc, updateDoc } from "firebase/firestore";
+import { firebase_firestore } from "utils/firebase";
 
 const makeMove = async (id: string, index: number, side: "X" | "O") => {
-  console.log("makeMove ", id, index, side);
   try {
-    const data = (
-      await firebase.firestore().collection("rooms").doc(id).get()
-    ).data();
+    const doc_ref = doc(firebase_firestore, "rooms", id);
+    const doc_snap = await getDoc(doc_ref);
+    const data = doc_snap.data();
     if (data) {
       let localBoard = data.board;
       localBoard[index] = side;
-      await firebase.firestore().collection("rooms").doc(id).update({
+      updateDoc(doc_ref, {
         board: localBoard,
       });
       return true;
