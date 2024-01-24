@@ -6,25 +6,48 @@ import { IBoardValue } from "utils/interfaces";
 interface IProps {
   board: IBoardValue;
   on_cell_press: (index: number) => void;
+  last_move_cell: number | null;
 }
 
-export const GameBoard = ({ board, on_cell_press }: IProps) => {
+export const GameBoard = ({ board, on_cell_press, last_move_cell }: IProps) => {
+  const [board_width, _set_board_width] = React.useState(1);
+
+  const cell_size = React.useMemo(() => (board_width - 20) / 3, [board_width]);
+
   return (
-    <View style={styles.container}>
+    <View style={styles.container} onLayout={(e) => _set_board_width(e.nativeEvent.layout.width)}>
       <View style={styles.row_container}>
-        <GameBoardCell value={board[0]} on_cell_press={() => on_cell_press(0)} />
-        <GameBoardCell value={board[1]} on_cell_press={() => on_cell_press(1)} />
-        <GameBoardCell value={board[2]} on_cell_press={() => on_cell_press(2)} />
+        {[0, 1, 2].map((index) => (
+          <GameBoardCell
+            key={index}
+            value={board[index]}
+            on_cell_press={() => on_cell_press(index)}
+            size={cell_size}
+            highlighted={last_move_cell === index}
+          />
+        ))}
       </View>
       <View style={styles.row_container}>
-        <GameBoardCell value={board[3]} on_cell_press={() => on_cell_press(3)} />
-        <GameBoardCell value={board[4]} on_cell_press={() => on_cell_press(4)} />
-        <GameBoardCell value={board[5]} on_cell_press={() => on_cell_press(5)} />
+        {[3, 4, 5].map((index) => (
+          <GameBoardCell
+            key={index}
+            value={board[index]}
+            on_cell_press={() => on_cell_press(index)}
+            size={cell_size}
+            highlighted={last_move_cell === index}
+          />
+        ))}
       </View>
       <View style={styles.row_container}>
-        <GameBoardCell value={board[6]} on_cell_press={() => on_cell_press(6)} />
-        <GameBoardCell value={board[7]} on_cell_press={() => on_cell_press(7)} />
-        <GameBoardCell value={board[8]} on_cell_press={() => on_cell_press(8)} />
+        {[6, 7, 8].map((index) => (
+          <GameBoardCell
+            key={index}
+            value={board[index]}
+            on_cell_press={() => on_cell_press(index)}
+            size={cell_size}
+            highlighted={last_move_cell === index}
+          />
+        ))}
       </View>
     </View>
   );
@@ -33,8 +56,6 @@ export const GameBoard = ({ board, on_cell_press }: IProps) => {
 const styles = StyleSheet.create({
   container: {
     rowGap: 10,
-    justifyContent: "center",
-    alignItems: "center",
   },
   row_container: {
     flexDirection: "row",

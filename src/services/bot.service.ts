@@ -63,10 +63,7 @@ export const calculate_next_move = (board: IBoardValue, side: IPlayerSide): numb
       bestValue = minMaxValue;
       bestMove = availableMove;
     }
-    console.log(availableMove, minMaxValue, bestValue);
-    // console.log(bestMove)
   }
-  // console.log("\n");
   return bestMove || availableMoves[0];
 };
 

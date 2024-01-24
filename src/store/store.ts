@@ -1,12 +1,8 @@
 import { configureStore } from "@reduxjs/toolkit";
 import { useDispatch, TypedUseSelectorHook, useSelector } from "react-redux";
-import { modalReducer, onlineReducer } from "./slices";
 
 export const store = configureStore({
-  reducer: {
-    modal: modalReducer,
-    online: onlineReducer,
-  },
+  reducer: {},
 });
 
 export type RootState = ReturnType<typeof store.getState>;

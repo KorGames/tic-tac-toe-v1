@@ -1,112 +1,142 @@
-import React, { useEffect, useCallback } from "react";
 import { useFocusEffect, useNavigation } from "@react-navigation/core";
-import { useAppDispatch, useAppSelector } from "store/store";
-
-import { showResultModal } from "store/slices/modalSlice";
-import { exitRoom, winnerSet } from "services/online";
-import { roomSet } from "store/slices/onlineSlice";
-import { FontAwesome5 } from "@expo/vector-icons";
-import { View } from "react-native";
+import React, { useState, useCallback, useRef } from "react";
+import { StyleSheet } from "react-native";
+import { room_service } from "services/room.service";
+import { IRoom } from "types/room.types";
+import { MainRouterScreenProps } from "types/navigation";
+import { GameBoard } from "components/Game/GameBoard";
+import { board_service } from "services/board.service";
+import { SafeAreaView } from "react-native-safe-area-context";
+import { KorButton } from "components/Library/KorButton";
+import { user_service } from "services/user.service";
+import { OnlineGamePlayer } from "components/OnlineGame/OnlineGamePlayer";
+import { firebase_auth } from "utils/firebase.utils";
+import { useAsyncPrompt } from "hooks/useAsyncPrompt";
+import { bot_service } from "services/bot.service";
 
 export const OnlineGameScreen = () => {
-  // const nav = useNavigation();
-  // const { room, user } = useAppSelector((state) => state.online);
-  // const dispatch = useAppDispatch();
+  /* ******************** Hooks ******************** */
+  const navigation = useNavigation<MainRouterScreenProps<"OnlineGame">["navigation"]>();
+  const [room_id, _set_room_id] = useState<string | null>(null);
+  const [room, _set_room] = useState<IRoom | null>(null);
+  const { start_async_prompt } = useAsyncPrompt();
 
-  // const isBoardFull = room && room.board.every((cell) => cell);
+  /* ******************** Variables ******************** */
+  const auth_user_id = firebase_auth.currentUser?.uid;
+  const auth_user_side = room?.x_player_id === auth_user_id ? "X" : "O";
+  const auth_user_wins = auth_user_side === "X" ? room?.x_player_wins : room?.o_player_wins;
 
-  // useEffect(() => {
-  //   // Check terminal state
-  //   if (room) {
-  //     if (!room.winner) {
-  //       if (isBoardFull) {
-  //         winnerSet(room.id, "draw");
-  //         dispatch(showResultModal(true));
-  //       }
-  //       const win = checkWin(room.board);
-  //       if (win) {
-  //         winnerSet(room.id, win);
-  //         dispatch(showResultModal(true));
-  //       }
-  //     }
-  //   }
-  // }, [room]);
+  const opponent_id = auth_user_side === "X" ? room?.o_player_id : room?.x_player_id;
+  const opponent_side = auth_user_side === "X" ? "O" : "X";
+  const opponent_wins = auth_user_side === "X" ? room?.o_player_wins : room?.x_player_wins;
+  const opponent_left = auth_user_side === "X" ? room?.o_player_left : room?.x_player_left;
+  const opponent_is_ai = room?.o_player_id === "AI";
 
-  // useFocusEffect(
-  //   useCallback(() => {
-  //     let unsub = () => {};
-  //     // Track real time updates of the room
-  //     if (room) {
-  //       // unsub = firebase
-  //       //   .firestore()
-  //       //   .collection("rooms")
-  //       //   .doc(room.id)
-  //       //   .onSnapshot((snap) => {
-  //       //     console.log("Update");
-  //       //     const data = snap.data();
-  //       //     dispatch(roomSet(data));
-  //       //   });
-  //     }
-  //     return () => unsub();
-  //   }, [room?.id])
-  // );
+  /* ******************** Functions ******************** */
+  const on_home_press = async () => {
+    try {
+      if (room_id) {
+        room_service.exit_room(room_id);
+      }
+    } catch (error) {}
+    navigation.navigate("Home");
+  };
 
-  // const handleClose = async () => {
-  //   if (user && room) {
-  //     await exitRoom(room?.id, user);
-  //     dispatch(roomSet(null));
-  //     dispatch(showResultModal(false));
-  //   }
-  //   nav.navigate("Home");
-  // };
+  const add_ai_player = useCallback(
+    async (room_id: string) => {
+      if (room?.o_player_id && room.x_player_id) return;
+      room_service.ai_join_room(room_id).catch((err) => console.log(err));
+    },
+    [room?.o_player_id, room?.x_player_id]
+  );
 
-  // if (!room) {
-  //   return (
-  //     <View>
-  //       {/* <Center>
-  //         <Spinner />
-  //         <Button onPress={() => nav.navigate("Home")}>Close</Button>
-  //       </Center> */}
-  //     </View>
-  //   );
-  // }
+  /* ******************** Effects ******************** */
+  useFocusEffect(
+    useCallback(() => {
+      let unsubscribe = () => {};
+      if (!room_id) return;
+      unsubscribe = room_service.on_room_change(room_id, (room) => {
+        _set_room(room);
+      });
+
+      return () => unsubscribe();
+    }, [room_id])
+  );
+
+  useFocusEffect(
+    useCallback(() => {
+      if (room_id) return;
+      room_service
+        .find_room()
+        .then((room_id) => {
+          _set_room_id(room_id);
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    }, [])
+  );
+
+  useFocusEffect(
+    useCallback(() => {
+      if (!room_id || !opponent_id || !opponent_side) return;
+      if (opponent_is_ai && room?.turn === opponent_side) {
+        const ai_move = bot_service.calculate_next_move(room.board, room.turn);
+        setTimeout(() => {
+          room_service.make_move(room_id, ai_move, opponent_id).catch((err) => console.log(err));
+        }, 1000);
+      }
+    }, [opponent_is_ai, room?.turn, opponent_side, opponent_id])
+  );
+
+  useFocusEffect(
+    useCallback(() => {
+      if (!room_id) return;
+      setTimeout(() => {
+        add_ai_player(room_id);
+      }, 1000 * 5); // 10 seconds
+    }, [room_id])
+  );
+
+  useFocusEffect(
+    useCallback(() => {
+      if (!room_id) return;
+      if (opponent_left) {
+        start_async_prompt({
+          title: "Opponent left",
+          description: "Opponent left the game",
+          hide_cancel: true,
+          confirm_text: "Ok",
+        }).then(() => {
+          room_service.exit_room(room_id);
+          navigation.navigate("Home");
+        });
+      }
+    }, [opponent_left])
+  );
 
   return (
-    <View>
-      {/* <ResultModal />
-      <VStack flex={1} padding={5}>
-        <Box flex={1} paddingY={5}>
-          <Board />
-        </Box>
-        <HStack justifyContent="space-evenly" alignItems="center">
-          <VStack
-            backgroundColor={room.players["X"] ? "secondary.500" : "gray.500"}
-            justifyContent="space-evenly"
-            alignItems="center"
-            borderRadius={20}
-            padding={5}
-            borderWidth={2}
-            borderColor={room.turn === "X" ? "white" : "secondary.500"}
-          >
-            {room.players["X"] ? <Icon as={FontAwesome} name="close" /> : <Icon as={FontAwesome} name="exclamation-circle" />}
-            <Heading color="white">{room.players.X === user ? "You" : "Opp"}</Heading>
-          </VStack>
-          <IconButton icon={<Icon as={FontAwesome5} name="home" />} variant="solid" p={5} borderRadius={20} onPress={handleClose} />
+    <SafeAreaView style={styles.container}>
+      <OnlineGamePlayer name="Opponent" side={opponent_side} wins={opponent_wins ?? 0} turn={room?.turn === opponent_side} loading={!opponent_id} />
 
-          <VStack
-            backgroundColor={room.players["O"] ? "primary.500" : "gray.500"}
-            justifyContent="space-evenly"
-            alignItems="center"
-            borderRadius={20}
-            padding={5}
-            borderWidth={2}
-            borderColor={room.turn === "O" ? "white" : "primary.500"}
-          >
-            {room.players["O"] ? <Icon as={FontAwesome} name="circle-o" /> : <Icon as={FontAwesome} name="exclamation-circle" />}
-            <Heading color="white">{room.players.O === user ? "You" : "Opp"}</Heading>
-          </VStack>
-        </HStack>
-      </VStack> */}
-    </View>
+      <GameBoard
+        board={room?.board || board_service.initial_board}
+        on_cell_press={(cell) => room_id && room_service.make_move(room_id, cell).catch((err) => console.log(err))}
+        last_move_cell={room?.last_move_cell ?? null}
+      />
+
+      <OnlineGamePlayer name="You" side={auth_user_side} wins={auth_user_wins ?? 0} turn={room?.turn === auth_user_side} />
+      <KorButton onPress={on_home_press} style={{ marginTop: 20 }}>
+        Leave
+      </KorButton>
+    </SafeAreaView>
   );
 };
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    justifyContent: "center",
+    padding: 20,
+  },
+});

@@ -6,11 +6,12 @@ import { IPlayerSide } from "utils/interfaces";
 import { theme_tokens } from "utils/styles.utils";
 
 interface IProps {
-  on_board_reset: () => void;
+  on_reset: () => void;
   turn: IPlayerSide;
+  on_home_press: () => void;
 }
 
-export const GameControls = ({ on_board_reset, turn }: IProps) => {
+export const GameControls = ({ on_reset, turn, on_home_press }: IProps) => {
   /* ******************** Hooks ******************** */
   /* ******************** Variables ******************** */
   /* ******************** Functions ******************** */
@@ -19,10 +20,15 @@ export const GameControls = ({ on_board_reset, turn }: IProps) => {
   return (
     <View style={styles.container}>
       <View style={styles.turn_container}>
-        <KorText style={[styles.x_turn, turn === "X" ? styles.turn_inactive : null]}>X</KorText>
-        <KorText style={[styles.o_turn, turn === "O" ? styles.turn_inactive : null]}>O</KorText>
+        <KorText weight="bold" style={[styles.x_turn, turn === "X" ? styles.turn_inactive : null]}>
+          X
+        </KorText>
+        <KorText weight="bold" style={[styles.o_turn, turn === "O" ? styles.turn_inactive : null]}>
+          O
+        </KorText>
       </View>
-      <KorButton onPress={on_board_reset} color="tertiary">
+      <KorButton onPress={on_home_press}>HOME</KorButton>
+      <KorButton onPress={on_reset} color="tertiary">
         RESET
       </KorButton>
     </View>
@@ -34,7 +40,6 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     justifyContent: "space-between",
     alignItems: "center",
-    width: 320,
   },
   turn_container: {
     flexDirection: "row",

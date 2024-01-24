@@ -3,18 +3,29 @@ import { FontAwesome } from "@expo/vector-icons";
 import { Pressable, PressableStateCallbackType, StyleProp, ViewStyle } from "react-native";
 import { ICellValue } from "utils/interfaces";
 import { theme_tokens } from "utils/styles.utils";
+import { KorText } from "components/Library/KorText";
 
 interface Props {
   on_cell_press: () => void;
   value: ICellValue;
+  size: number;
+  highlighted?: boolean;
 }
 
-export const GameBoardCell = ({ on_cell_press, value }: Props) => {
+export const GameBoardCell = ({ on_cell_press, value, size, highlighted }: Props) => {
   const cell_icon = useMemo(() => {
     if (value === "X") {
-      return <FontAwesome name="close" style={{ color: theme_tokens.primary.main, fontSize: 20 }} />;
+      return (
+        <KorText weight="bold" style={{ color: theme_tokens.primary.main, fontSize: size / 2 }}>
+          X
+        </KorText>
+      );
     } else if (value === "O") {
-      return <FontAwesome name="circle-o" style={{ color: theme_tokens.secondary.main, fontSize: 20 }} />;
+      return (
+        <KorText weight="bold" style={{ color: theme_tokens.secondary.main, fontSize: size / 2 }}>
+          O
+        </KorText>
+      );
     } else {
       return null;
     }
@@ -22,16 +33,28 @@ export const GameBoardCell = ({ on_cell_press, value }: Props) => {
 
   const cell_style = useCallback(
     ({ pressed }: PressableStateCallbackType): StyleProp<ViewStyle> => ({
-      width: 100,
-      height: 100,
+      width: size,
+      height: size,
       justifyContent: "center",
       alignItems: "center",
       backgroundColor: theme_tokens.dark.light,
       borderRadius: 10,
-      borderBottomColor: pressed ? theme_tokens.dark.light : theme_tokens.dark.dark,
-      borderBottomWidth: 4,
+
+      borderWidth: 1,
+      borderColor: highlighted ? theme_tokens.tertiary.main : theme_tokens.dark.light,
+
+      shadowColor: "#000",
+      shadowOffset: {
+        width: 0,
+        height: 2,
+      },
+      shadowOpacity: 0.25,
+      shadowRadius: 3.84,
+
+      elevation: 5,
+      transform: [{ scale: pressed ? 0.95 : 1 }],
     }),
-    []
+    [size, highlighted]
   );
 
   return (

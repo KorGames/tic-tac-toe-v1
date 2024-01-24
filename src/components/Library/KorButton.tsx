@@ -15,9 +15,10 @@ export const KorButton = ({ children, color = "primary", ...props }: React.Props
         padding: 5,
         borderRadius: 6,
         borderBottomWidth: 4,
-        borderBottomColor: pressed ? theme_tokens[color].main : theme_tokens[color].dark,
+        borderBottomColor: theme_tokens[color].dark,
         borderStyle: "solid",
         alignItems: "center",
+        transform: [{ scale: pressed ? 0.95 : 1 }],
       };
     },
     [color]
@@ -25,7 +26,9 @@ export const KorButton = ({ children, color = "primary", ...props }: React.Props
 
   return (
     <Pressable {...props} style={pressable_styles}>
-      <KorText style={{ color: theme_tokens.dark.main, textTransform: "uppercase" }}>{children}</KorText>
+      <KorText weight="bold" style={{ color: theme_tokens.dark.main, textTransform: "uppercase", fontSize: 20 }}>
+        {children}
+      </KorText>
     </Pressable>
   );
 };

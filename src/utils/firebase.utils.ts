@@ -16,7 +16,7 @@ const firebaseConfig = {
   appId: "1:192428586255:web:2934ab431da7ced95aba7a",
   measurementId: "G-490WQ1ZPEJ",
 };
-
+(window.navigator as any).userAgent = "ReactNative";
 const firebase_app = initializeApp(firebaseConfig);
 
 // const analytics = getAnalytics(firebase_app);

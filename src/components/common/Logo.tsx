@@ -6,9 +6,15 @@ import { theme_tokens } from "utils/styles.utils";
 export const Logo = () => {
   return (
     <View style={styles.container}>
-      <KorText style={styles.tic_text}>TIC</KorText>
-      <KorText style={styles.tac_text}>TAC</KorText>
-      <KorText style={styles.toe_text}>TOE</KorText>
+      <KorText weight="bold" style={styles.tic_text}>
+        TIC
+      </KorText>
+      <KorText weight="bold" style={styles.tac_text}>
+        TAC
+      </KorText>
+      <KorText weight="bold" style={styles.toe_text}>
+        TOE
+      </KorText>
     </View>
   );
 };
@@ -22,11 +28,11 @@ const styles = StyleSheet.create({
     justifyContent: "center",
   },
   tic_text: {
-    fontSize: 30,
+    fontSize: 40,
     fontWeight: "bold",
     color: theme_tokens.primary.main,
     textShadowColor: theme_tokens.primary.dark,
-    textShadowOffset: { width: 0, height: 2 },
+    textShadowOffset: { width: 0, height: 3 },
     textShadowRadius: 1,
   },
   tac_text: {
@@ -34,15 +40,15 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
     color: theme_tokens.tertiary.main,
     textShadowColor: theme_tokens.tertiary.dark,
-    textShadowOffset: { width: 0, height: 2 },
+    textShadowOffset: { width: 0, height: 3 },
     textShadowRadius: 1,
   },
   toe_text: {
-    fontSize: 30,
+    fontSize: 40,
     fontWeight: "bold",
     color: theme_tokens.secondary.main,
     textShadowColor: theme_tokens.secondary.dark,
-    textShadowOffset: { width: 0, height: 2 },
+    textShadowOffset: { width: 0, height: 3 },
     textShadowRadius: 1,
   },
 });

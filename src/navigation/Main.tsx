@@ -5,7 +5,6 @@ import { StatusBar } from "react-native";
 import { GameScreen } from "screens/GameScreen";
 import { HomeScreen } from "screens/HomeScreen";
 import { OnlineGameScreen } from "screens/OnlineGameScreen";
-import { WaitingRoomScreen } from "screens/WaitingRoomScreen";
 import { theme_tokens } from "utils/styles.utils";
 
 const Stack = createNativeStackNavigator();
@@ -25,7 +24,6 @@ const Main = () => {
       >
         <Stack.Screen name="Home" component={HomeScreen} />
         <Stack.Screen name="Game" component={GameScreen} />
-        <Stack.Screen name="WaitingRoom" component={WaitingRoomScreen} />
         <Stack.Screen name="OnlineGame" component={OnlineGameScreen} />
       </Stack.Navigator>
     </NavigationContainer>

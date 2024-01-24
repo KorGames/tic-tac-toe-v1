@@ -17,17 +17,23 @@ export const GameAggregateResults = ({ x_wins, o_wins, draws }: IProps) => {
   /* ******************** JSX ******************** */
   return (
     <View style={styles.container}>
-      <View style={styles.x_wins_container}>
-        <KorText>X (YOU)</KorText>
-        <KorText weight="bold">{x_wins}</KorText>
+      <View style={[styles.result_container, styles.x_wins_container]}>
+        <KorText color="dark">X (YOU)</KorText>
+        <KorText weight="bold" color="dark">
+          {x_wins}
+        </KorText>
       </View>
-      <View style={styles.draws_container}>
-        <KorText>DRAWS</KorText>
-        <KorText weight="bold">{draws}</KorText>
+      <View style={[styles.result_container, styles.draws_container]}>
+        <KorText color="dark">DRAWS</KorText>
+        <KorText weight="bold" color="dark">
+          {draws}
+        </KorText>
       </View>
-      <View style={styles.o_wins_container}>
-        <KorText>O (BOT)</KorText>
-        <KorText weight="bold">{o_wins}</KorText>
+      <View style={[styles.result_container, styles.o_wins_container]}>
+        <KorText color="dark">O (BOT)</KorText>
+        <KorText weight="bold" color="dark">
+          {o_wins}
+        </KorText>
       </View>
     </View>
   );
@@ -36,28 +42,21 @@ export const GameAggregateResults = ({ x_wins, o_wins, draws }: IProps) => {
 const styles = StyleSheet.create({
   container: {
     flexDirection: "row",
-    justifyContent: "center",
+    justifyContent: "space-between",
     columnGap: 10,
   },
-  x_wins_container: {
+  result_container: {
     padding: 10,
     borderRadius: 10,
-    backgroundColor: theme_tokens.primary.main,
-    width: 100,
     alignItems: "center",
+  },
+  x_wins_container: {
+    backgroundColor: theme_tokens.primary.main,
   },
   o_wins_container: {
-    padding: 10,
-    borderRadius: 10,
     backgroundColor: theme_tokens.secondary.main,
-    width: 100,
-    alignItems: "center",
   },
   draws_container: {
-    padding: 10,
-    borderRadius: 10,
     backgroundColor: theme_tokens.tertiary.main,
-    width: 100,
-    alignItems: "center",
   },
 });

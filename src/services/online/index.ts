@@ -1,9 +1,0 @@
-export { default as createRoom } from "./createRoom";
-export { default as joinRoom } from "./joinRoom";
-export { default as deleteRoom } from "./deleteRoom";
-export { default as getAvailableRooms } from "./getAvailableRooms";
-export { default as getRoom } from "./getRoom";
-export { default as makeMove } from "./makeMove";
-export { default as winnerSet } from "./winnerSet";
-export { default as switchTurn } from "./switchTurn";
-export { default as exitRoom } from "./exitRoom";
