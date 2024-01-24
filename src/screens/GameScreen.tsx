@@ -99,6 +99,7 @@ export const GameScreen = () => {
   useEffect(() => {
     if (board_service.is_board_empty(board)) {
       _set_turn("X");
+      return;
     }
     const winner = board_service.calculate_winner(board);
     if (winner) {

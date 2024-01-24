@@ -13,7 +13,6 @@
     "@react-native-async-storage/async-storage": "^1.21.0",
     "@react-navigation/native": "^6.0.2",
     "@react-navigation/native-stack": "^6.1.0",
-    "@reduxjs/toolkit": "^1.6.1",
     "expo": "^50.0.2",
     "expo-font": "~11.10.2",
     "expo-splash-screen": "~0.26.3",
@@ -23,15 +22,10 @@
     "react-dom": "18.2.0",
     "react-native": "0.73.2",
     "react-native-safe-area-context": "4.8.2",
-    "react-native-screens": "~3.29.0",
-    "react-native-svg": "14.1.0",
-    "react-redux": "^7.2.5",
-    "styled-components": "^6.1.8",
-    "uuid": "^8.3.2"
+    "react-native-screens": "~3.29.0"
   },
   "devDependencies": {
     "@types/react": "~18.2.45",
-    "@types/uuid": "^8.3.1",
     "babel-plugin-module-resolver": "^4.1.0",
     "typescript": "^5.3.0"
   },
