@@ -15,19 +15,11 @@
       "fallbackToCacheTimeout": 0,
       "url": "https://u.expo.dev/f605e771-cd04-4992-bfd2-d4186ae2105b"
     },
-    "assetBundlePatterns": [
-      "**/*"
-    ],
+    "assetBundlePatterns": ["**/*"],
     "ios": {
       "supportsTablet": false,
       "bundleIdentifier": "digital.korol.tic-tac-toe",
-      "buildNumber": "3",
-      "config": {
-        "googleMobileAdsAppId": "ca-app-pub-7199910147118397~7218629091"
-      },
-      "infoPlist": {
-        "NSUserTrackingUsageDescription": "This identifier will be used to deliver personalized ads to you."
-      }
+      "buildNumber": "3"
     },
     "android": {
       "package": "digital.korol.tic_tac_toe",
@@ -37,9 +29,7 @@
         "backgroundColor": "#FFFFFF"
       }
     },
-    "plugins": [
-      "expo-font"
-    ],
+    "plugins": ["expo-font"],
     "extra": {
       "eas": {
         "projectId": "f605e771-cd04-4992-bfd2-d4186ae2105b"
