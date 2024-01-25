@@ -4,6 +4,7 @@
     "slug": "tic-tac-toe",
     "version": "1.0.0",
     "orientation": "portrait",
+    "owner": "korgames",
     "icon": "./assets/icon.png",
     "splash": {
       "image": "./assets/splash.png",
@@ -11,7 +12,8 @@
       "backgroundColor": "#ffffff"
     },
     "updates": {
-      "fallbackToCacheTimeout": 0
+      "fallbackToCacheTimeout": 0,
+      "url": "https://u.expo.dev/f605e771-cd04-4992-bfd2-d4186ae2105b"
     },
     "assetBundlePatterns": [
       "**/*"
@@ -37,6 +39,14 @@
     },
     "plugins": [
       "expo-font"
-    ]
+    ],
+    "extra": {
+      "eas": {
+        "projectId": "f605e771-cd04-4992-bfd2-d4186ae2105b"
+      }
+    },
+    "runtimeVersion": {
+      "policy": "appVersion"
+    }
   }
 }
