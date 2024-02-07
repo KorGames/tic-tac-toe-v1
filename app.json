@@ -29,7 +29,15 @@
         "backgroundColor": "#FFFFFF"
       }
     },
-    "plugins": ["expo-font"],
+    "plugins": [
+      "expo-font",
+      [
+        "expo-tracking-transparency",
+        {
+          "userTrackingPermission": "We are using tracking to improve your experience."
+        }
+      ]
+    ],
     "extra": {
       "eas": {
         "projectId": "f605e771-cd04-4992-bfd2-d4186ae2105b"
