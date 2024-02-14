@@ -6,7 +6,8 @@
     "ios": "expo start --ios",
     "web": "expo start --web",
     "eject": "expo eject",
-    "build": "eas build --profile prod --platform"
+    "build": "eas build --profile prod --platform",
+    "update:prod": "eas update --branch prod && npx sentry-expo-upload-sourcemaps dist"
   },
   "dependencies": {
     "@expo-google-fonts/jost": "^0.2.3",
@@ -14,6 +15,7 @@
     "@react-native-async-storage/async-storage": "^1.21.0",
     "@react-navigation/native": "^6.0.2",
     "@react-navigation/native-stack": "^6.1.0",
+    "@sentry/react-native": "5.17.0",
     "expo": "~50.0.3",
     "expo-font": "~11.10.2",
     "expo-splash-screen": "~0.26.4",

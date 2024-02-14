@@ -6,10 +6,12 @@ import { View } from "react-native";
 import { Jost_400Regular, Jost_500Medium, useFonts, Jost_700Bold } from "@expo-google-fonts/jost";
 import { AsyncPromptProvider } from "hooks/useAsyncPrompt";
 import { requestTrackingPermissionsAsync } from "expo-tracking-transparency";
+import * as Sentry from "@sentry/react-native";
+import "utils/sentry-config";
 
 SplashScreen.preventAutoHideAsync();
 
-export default function App() {
+function App() {
   const [fontsLoaded, fontError] = useFonts({
     jost_regular: Jost_400Regular,
     jost_medium: Jost_500Medium,
@@ -39,3 +41,5 @@ export default function App() {
     </View>
   );
 }
+
+export default Sentry.wrap(App);

@@ -36,6 +36,14 @@
         {
           "userTrackingPermission": "We are using tracking to improve your experience."
         }
+      ],
+      [
+        "@sentry/react-native/expo",
+        {
+          "url": "https://sentry.io/",
+          "organization": "kor-games",
+          "project": "tic-tac-toe"
+        }
       ]
     ],
     "extra": {
