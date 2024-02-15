@@ -41,6 +41,7 @@ export const HomeScreen = () => {
       <View style={styles.menu_container}>
         <KorButton onPress={() => navigation.navigate("Game", { ai: true })}>Single Play</KorButton>
         <KorButton onPress={() => navigation.navigate("Game")}>Two Players</KorButton>
+        <KorButton onPress={() => navigation.navigate("GameV2")}>Game V2</KorButton>
         <KorButton onPress={on_online_game_press}>Online Play</KorButton>
       </View>
     </SafeAreaView>

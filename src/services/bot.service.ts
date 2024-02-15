@@ -1,4 +1,4 @@
-import { IBoardValue, IPlayerSide } from "utils/interfaces";
+import { IBoardValue, IPlayerSide } from "types/game.types";
 import { board_service } from "./board.service";
 
 const minimax = (board: IBoardValue, side: IPlayerSide, depth: number) => {
@@ -18,7 +18,7 @@ const minimax = (board: IBoardValue, side: IPlayerSide, depth: number) => {
     return 0;
   }
 
-  const availableMoves = board.map((cell, index) => (!cell ? index : null)).filter((item) => item !== null);
+  const availableMoves = board?.map((cell, index) => (!cell ? index : null)).filter((item) => item !== null);
 
   if (isMax) {
     let best = -100;

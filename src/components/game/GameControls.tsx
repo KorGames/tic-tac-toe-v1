@@ -2,7 +2,7 @@ import { KorButton } from "components/Library/KorButton";
 import { KorText } from "components/Library/KorText";
 import React from "react";
 import { StyleSheet, View } from "react-native";
-import { IPlayerSide } from "utils/interfaces";
+import { IPlayerSide } from "types/game.types";
 import { theme_tokens } from "utils/styles.utils";
 
 interface IProps {
@@ -20,10 +20,10 @@ export const GameControls = ({ on_reset, turn, on_home_press }: IProps) => {
   return (
     <View style={styles.container}>
       <View style={styles.turn_container}>
-        <KorText weight="bold" style={[styles.x_turn, turn === "X" ? styles.turn_inactive : null]}>
+        <KorText weight="bold" style={[styles.x_turn, turn === "X" ? null : styles.turn_inactive]}>
           X
         </KorText>
-        <KorText weight="bold" style={[styles.o_turn, turn === "O" ? styles.turn_inactive : null]}>
+        <KorText weight="bold" style={[styles.o_turn, turn === "O" ? null : styles.turn_inactive]}>
           O
         </KorText>
       </View>

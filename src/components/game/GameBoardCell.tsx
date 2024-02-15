@@ -1,9 +1,8 @@
 import React, { useCallback, useMemo } from "react";
-import { FontAwesome } from "@expo/vector-icons";
 import { Pressable, PressableStateCallbackType, StyleProp, ViewStyle } from "react-native";
-import { ICellValue } from "utils/interfaces";
 import { theme_tokens } from "utils/styles.utils";
 import { KorText } from "components/Library/KorText";
+import { ICellValue } from "types/game.types";
 
 interface Props {
   on_cell_press: () => void;

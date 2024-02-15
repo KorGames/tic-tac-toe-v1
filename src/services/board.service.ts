@@ -1,4 +1,4 @@
-import { IBoardValue, IPlayerSide } from "utils/interfaces";
+import { IBoardValue, IPlayerSide } from "types/game.types";
 
 const initial_board = Array(9).fill(null);
 

@@ -1,7 +1,7 @@
 import React from "react";
 import { StyleSheet, View } from "react-native";
 import { GameBoardCell } from "./GameBoardCell";
-import { IBoardValue } from "utils/interfaces";
+import { IBoardValue } from "types/game.types";
 
 interface IProps {
   board: IBoardValue;

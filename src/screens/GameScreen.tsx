@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useNavigation, useRoute } from "@react-navigation/core";
 import { StyleSheet } from "react-native";
-import { IBoardValue, IPlayerSide } from "utils/interfaces";
 import { MainRouterScreenProps } from "types/navigation";
 import { board_service } from "services/board.service";
 import { bot_service } from "services/bot.service";
@@ -11,6 +10,7 @@ import { GameControls } from "../components/Game/GameControls";
 import { useAsyncPrompt } from "hooks/useAsyncPrompt";
 import { KorText } from "components/Library/KorText";
 import { SafeAreaView } from "react-native-safe-area-context";
+import { IBoardValue, IPlayerSide } from "types/game.types";
 
 export const GameScreen = () => {
   const navigation = useNavigation<MainRouterScreenProps<"Game">["navigation"]>();

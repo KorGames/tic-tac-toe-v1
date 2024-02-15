@@ -7,6 +7,7 @@ export type AuthRouterScreenProps<T extends keyof AuthRouterParamList> = NativeS
 export type MainRouterParamList = {
   Home: undefined;
   Game: { ai: boolean } | undefined;
+  GameV2: undefined;
   OnlineGame: undefined;
 };
 
