@@ -1,12 +1,14 @@
 import React from "react";
 import { useNavigation } from "@react-navigation/native";
-import { StyleSheet, SafeAreaView, View } from "react-native";
+import { StyleSheet, View } from "react-native";
 import { Logo } from "components/common/Logo";
 import { KorButton } from "components/Library/KorButton";
 import { MainRouterScreenProps } from "types/navigation";
 import { user_service } from "services/user.service";
 import { useAsyncPrompt } from "hooks/useAsyncPrompt";
 import { firebase_auth } from "utils/firebase.utils";
+import { KorText } from "components/Library/KorText";
+import { SafeAreaView } from "react-native-safe-area-context";
 
 export const HomeScreen = () => {
   const navigation = useNavigation<MainRouterScreenProps<"OnlineGame">["navigation"]>();
@@ -39,10 +41,13 @@ export const HomeScreen = () => {
         <Logo />
       </View>
       <View style={styles.menu_container}>
+        <KorText>Standard TIC TAC TOE</KorText>
         <KorButton onPress={() => navigation.navigate("Game", { ai: true })}>Single Play</KorButton>
         <KorButton onPress={() => navigation.navigate("Game")}>Two Players</KorButton>
-        <KorButton onPress={() => navigation.navigate("GameV2")}>Game V2</KorButton>
         <KorButton onPress={on_online_game_press}>Online Play</KorButton>
+        <View style={{ height: 20 }} />
+        <KorText>New TIC TAC TOE V2</KorText>
+        <KorButton onPress={() => navigation.navigate("GameV2")}>Two Players</KorButton>
       </View>
     </SafeAreaView>
   );
@@ -51,9 +56,9 @@ export const HomeScreen = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    padding: 20,
   },
   logo_container: {
-    flex: 1,
     justifyContent: "center",
   },
   menu_container: {

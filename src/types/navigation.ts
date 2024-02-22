@@ -8,6 +8,7 @@ export type MainRouterParamList = {
   Home: undefined;
   Game: { ai: boolean } | undefined;
   GameV2: undefined;
+  GameSelect: undefined;
   OnlineGame: undefined;
 };
 
