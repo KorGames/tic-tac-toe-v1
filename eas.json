@@ -3,6 +3,11 @@
     "appVersionSource": "remote"
   },
   "build": {
+    "dev_client": {
+      "channel": "prod",
+      "developmentClient": true,
+      "distribution": "internal"
+    },
     "prod": {
       "autoIncrement": true,
       "channel": "prod",

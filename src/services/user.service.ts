@@ -1,6 +1,5 @@
-import { signInAnonymously } from "firebase/auth";
-import { firebase_auth } from "utils/firebase.utils";
+import auth from "@react-native-firebase/auth";
 
-const anonymous_user_login = async () => (await signInAnonymously(firebase_auth)).user;
+const anonymous_user_login = async () => (await auth().signInAnonymously()).user;
 
 export const user_service = { anonymous_user_login };

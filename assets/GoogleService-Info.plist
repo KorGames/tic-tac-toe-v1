@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>CLIENT_ID</key>
+	<string>192428586255-2a8m93ntk4s5u1uqp3kku69humvdqvub.apps.googleusercontent.com</string>
+	<key>REVERSED_CLIENT_ID</key>
+	<string>com.googleusercontent.apps.192428586255-2a8m93ntk4s5u1uqp3kku69humvdqvub</string>
+	<key>API_KEY</key>
+	<string>AIzaSyA_b1v8FZF-AkigzdFDJqgEZIO9QdT-YqA</string>
+	<key>GCM_SENDER_ID</key>
+	<string>192428586255</string>
+	<key>PLIST_VERSION</key>
+	<string>1</string>
+	<key>BUNDLE_ID</key>
+	<string>digital.korol.tic-tac-toe</string>
+	<key>PROJECT_ID</key>
+	<string>tic-tac-toe-97573</string>
+	<key>STORAGE_BUCKET</key>
+	<string>tic-tac-toe-97573.appspot.com</string>
+	<key>IS_ADS_ENABLED</key>
+	<false></false>
+	<key>IS_ANALYTICS_ENABLED</key>
+	<false></false>
+	<key>IS_APPINVITE_ENABLED</key>
+	<true></true>
+	<key>IS_GCM_ENABLED</key>
+	<true></true>
+	<key>IS_SIGNIN_ENABLED</key>
+	<true></true>
+	<key>GOOGLE_APP_ID</key>
+	<string>1:192428586255:ios:b9a5a9611018eea55aba7a</string>
+	<key>DATABASE_URL</key>
+	<string>https://tic-tac-toe-97573-default-rtdb.firebaseio.com</string>
+	<key>ADMOB_APP_ID</key>
+	<string>ca-app-pub-7199910147118397~7218629091</string>
+</dict>
+</plist>

@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "192428586255",
+    "firebase_url": "https://tic-tac-toe-97573-default-rtdb.firebaseio.com",
+    "project_id": "tic-tac-toe-97573",
+    "storage_bucket": "tic-tac-toe-97573.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:192428586255:android:d3dd263ca91d41585aba7a",
+        "android_client_info": {
+          "package_name": "digital.korol.tic_tac_toe"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "192428586255-7e1fv25unvi9ogdu8i7kahk7i9p0vuvo.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAV4QNLikpXzL_-jf_3HvHEKqN99pmRSQA"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "192428586255-7e1fv25unvi9ogdu8i7kahk7i9p0vuvo.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "192428586255-2a8m93ntk4s5u1uqp3kku69humvdqvub.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "digital.korol.tic-tac-toe"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

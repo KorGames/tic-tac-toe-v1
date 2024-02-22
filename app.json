@@ -19,17 +19,19 @@
     "ios": {
       "supportsTablet": false,
       "bundleIdentifier": "digital.korol.tic-tac-toe",
-      "buildNumber": "3"
+      "googleServicesFile": "./assets/GoogleService-Info.plist",
+      "usesAppleSignIn": true
     },
     "android": {
       "package": "digital.korol.tic_tac_toe",
-      "versionCode": 2,
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#FFFFFF"
-      }
+      },
+      "googleServicesFile": "./assets/google-services.json"
     },
     "plugins": [
+      "expo-apple-authentication",
       "expo-font",
       [
         "expo-tracking-transparency",
@@ -43,6 +45,16 @@
           "url": "https://sentry.io/",
           "organization": "kor-games",
           "project": "tic-tac-toe"
+        }
+      ],
+      "@react-native-firebase/app",
+      "@react-native-firebase/auth",
+      [
+        "expo-build-properties",
+        {
+          "ios": {
+            "useFrameworks": "static"
+          }
         }
       ]
     ],

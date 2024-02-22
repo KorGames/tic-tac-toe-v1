@@ -17,3 +17,10 @@ export const theme_tokens = {
     dark: "#97aab5",
   },
 };
+
+export const font_size_tokens = {
+  sm: 14,
+  md: 16,
+  lg: 18,
+  xl: 24,
+};

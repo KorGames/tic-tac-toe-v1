@@ -10,6 +10,8 @@ export type MainRouterParamList = {
   GameV2: undefined;
   GameSelect: undefined;
   OnlineGame: undefined;
+  SignUp: undefined;
+  LogIn: undefined;
 };
 
 export type MainRouterScreenProps<T extends keyof MainRouterParamList> = NativeStackScreenProps<MainRouterParamList, T>;

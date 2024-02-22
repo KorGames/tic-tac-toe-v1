@@ -1,5 +1,5 @@
 import { useFocusEffect, useNavigation } from "@react-navigation/core";
-import React, { useState, useCallback, useRef } from "react";
+import React, { useState, useCallback } from "react";
 import { StyleSheet } from "react-native";
 import { room_service } from "services/room.service";
 import { IRoom } from "types/room.types";
@@ -8,11 +8,10 @@ import { GameBoard } from "components/Game/GameBoard";
 import { board_service } from "services/board.service";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { KorButton } from "components/Library/KorButton";
-import { user_service } from "services/user.service";
 import { OnlineGamePlayer } from "components/OnlineGame/OnlineGamePlayer";
-import { firebase_auth } from "utils/firebase.utils";
 import { useAsyncPrompt } from "hooks/useAsyncPrompt";
 import { bot_service } from "services/bot.service";
+import { useAuth } from "hooks/useAuth";
 
 export const OnlineGameScreen = () => {
   /* ******************** Hooks ******************** */
@@ -20,9 +19,10 @@ export const OnlineGameScreen = () => {
   const [room_id, _set_room_id] = useState<string | null>(null);
   const [room, _set_room] = useState<IRoom | null>(null);
   const { start_async_prompt } = useAsyncPrompt();
+  const { user } = useAuth();
 
   /* ******************** Variables ******************** */
-  const auth_user_id = firebase_auth.currentUser?.uid;
+  const auth_user_id = user?.uid;
   const auth_user_side = room?.x_player_id === auth_user_id ? "X" : "O";
   const auth_user_wins = auth_user_side === "X" ? room?.x_player_wins : room?.o_player_wins;
 

@@ -1,13 +1,15 @@
 import { MainNav } from "navigation";
 import React, { useCallback } from "react";
-import "utils/firebase.utils";
 import * as SplashScreen from "expo-splash-screen";
 import { View } from "react-native";
 import { Jost_400Regular, Jost_500Medium, useFonts, Jost_700Bold } from "@expo-google-fonts/jost";
 import { AsyncPromptProvider } from "hooks/useAsyncPrompt";
 import { requestTrackingPermissionsAsync } from "expo-tracking-transparency";
 import * as Sentry from "@sentry/react-native";
+import { theme_tokens } from "utils/styles.utils";
+import { AuthProvider } from "hooks/useAuth";
 import "utils/sentry-config";
+import { NavigationContainer } from "@react-navigation/native";
 
 SplashScreen.preventAutoHideAsync();
 
@@ -34,10 +36,14 @@ function App() {
   }
 
   return (
-    <View style={{ flex: 1 }} onLayout={onLayoutRootView}>
-      <AsyncPromptProvider>
-        <MainNav />
-      </AsyncPromptProvider>
+    <View style={{ flex: 1, backgroundColor: theme_tokens.dark.main }} onLayout={onLayoutRootView}>
+      <NavigationContainer>
+        <AuthProvider>
+          <AsyncPromptProvider>
+            <MainNav />
+          </AsyncPromptProvider>
+        </AuthProvider>
+      </NavigationContainer>
     </View>
   );
 }
