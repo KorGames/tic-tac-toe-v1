@@ -1,5 +1,6 @@
 import appleAuth from "@invertase/react-native-apple-authentication";
 import auth, { FirebaseAuthTypes } from "@react-native-firebase/auth";
+import { GoogleSignin } from "@react-native-google-signin/google-signin";
 import { useNavigation } from "@react-navigation/native";
 import React, { useEffect } from "react";
 
@@ -42,6 +43,25 @@ export async function auth_with_apple() {
 
   // Sign the user in with the credential
   return auth().signInWithCredential(appleCredential);
+}
+
+export async function auth_with_google() {
+  // Check if your device supports Google Play
+  await GoogleSignin.hasPlayServices({ showPlayServicesUpdateDialog: true });
+  // Get the users ID token
+  const { idToken } = await GoogleSignin.signIn();
+
+  // Create a Google credential with the token
+  const googleCredential = auth.GoogleAuthProvider.credential(idToken);
+
+  // Sign-in the user with the credential
+  return auth().signInWithCredential(googleCredential);
+}
+
+export async function auth_with_facebook() {}
+
+export async function auth_with_email_and_password(email: string, password: string) {
+  return auth().signInWithEmailAndPassword(email, password);
 }
 
 export const AuthProvider = ({ children }: React.PropsWithChildren) => {

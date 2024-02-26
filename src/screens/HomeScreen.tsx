@@ -40,7 +40,12 @@ export const HomeScreen = () => {
   useLayoutEffect(() => {
     navigation.setOptions({
       headerTitle: () => <Logo />,
-      headerLeft: () => (!user || user?.isAnonymous ? <KorText>Log In</KorText> : null),
+      headerLeft: () =>
+        !user || user?.isAnonymous ? (
+          <KorText onPress={() => navigation.navigate("SignIn")}>Log In</KorText>
+        ) : (
+          <KorText onPress={() => navigation.navigate("GameHistory")}>Game History</KorText>
+        ),
       headerRight: () =>
         !user || user?.isAnonymous ? (
           <KorText onPress={() => navigation.navigate("SignUp")}>Sign Up</KorText>
@@ -49,9 +54,8 @@ export const HomeScreen = () => {
         ),
     });
   }, [user]);
-  console.log(user);
-  /* ******************** JSX ******************** */
 
+  /* ******************** JSX ******************** */
   return (
     <SafeAreaView style={styles.container}>
       <View style={styles.menu_container}>

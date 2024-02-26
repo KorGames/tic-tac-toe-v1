@@ -11,7 +11,8 @@ export type MainRouterParamList = {
   GameSelect: undefined;
   OnlineGame: undefined;
   SignUp: undefined;
-  LogIn: undefined;
+  SignIn: undefined;
+  GameHistory: undefined;
 };
 
 export type MainRouterScreenProps<T extends keyof MainRouterParamList> = NativeStackScreenProps<MainRouterParamList, T>;

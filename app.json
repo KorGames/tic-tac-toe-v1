@@ -32,6 +32,16 @@
     },
     "plugins": [
       "expo-apple-authentication",
+      "@react-native-google-signin/google-signin",
+      [
+        "react-native-fbsdk-next",
+        {
+          "appID": "48127127xxxxxxxx",
+          "displayName": "RN SDK Demo",
+          "clientToken": "c5078631e4065b60d7544a95xxxxxxxx",
+          "scheme": "fb48127127xxxxxxxx"
+        }
+      ],
       "expo-font",
       [
         "expo-tracking-transparency",

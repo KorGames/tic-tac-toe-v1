@@ -8,8 +8,9 @@ import { requestTrackingPermissionsAsync } from "expo-tracking-transparency";
 import * as Sentry from "@sentry/react-native";
 import { theme_tokens } from "utils/styles.utils";
 import { AuthProvider } from "hooks/useAuth";
-import "utils/sentry-config";
 import { NavigationContainer } from "@react-navigation/native";
+import "utils/sentry-config";
+import "utils/google-signing.utils";
 
 SplashScreen.preventAutoHideAsync();
 

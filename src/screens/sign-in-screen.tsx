@@ -1,32 +1,33 @@
+import { zodResolver } from "@hookform/resolvers/zod";
 import { useNavigation } from "@react-navigation/native";
 import { KorButton } from "components/Library/KorButton";
 import { KorDivider } from "components/Library/KorDivider";
+import { KorFullSpinner } from "components/Library/KorFullSpinner";
 import { KorText } from "components/Library/KorText";
 import { Logo } from "components/common/Logo";
+import { SignUpEmailForm } from "components/sign-up/sign-up-email-form";
 import { auth_with_apple, auth_with_google } from "hooks/useAuth";
 import React from "react";
-import { Alert, StyleSheet, View } from "react-native";
-import { MainRouterScreenProps } from "types/navigation";
-import { AntDesign } from "@expo/vector-icons";
-import { font_size_tokens } from "utils/styles.utils";
-import { SignUpEmailForm } from "components/sign-up/sign-up-email-form";
+import { useForm, FormProvider } from "react-hook-form";
+import { Alert, View, StyleSheet } from "react-native";
 import { user_service } from "services/user.service";
-import { KorFullSpinner } from "components/Library/KorFullSpinner";
-import { FormProvider, useForm } from "react-hook-form";
+import { MainRouterScreenProps } from "types/navigation";
+import { font_size_tokens } from "utils/styles.utils";
 import { z } from "zod";
-import { zodResolver } from "@hookform/resolvers/zod";
+import { AntDesign } from "@expo/vector-icons";
 
-export const sign_up_form_schema = z.object({
+export const signin_up_form_schema = z.object({
   email: z.string().email(),
-  password: z.string().min(6),
+  password: z.string(),
 });
-export interface IEmailSignUpForm extends z.infer<typeof sign_up_form_schema> {}
 
-export const SignUpScreen = () => {
+export interface IEmailSignInForm extends z.infer<typeof signin_up_form_schema> {}
+
+export const SignInScreen = () => {
   /* ******************** Hooks ******************** */
-  const navigation = useNavigation<MainRouterScreenProps<"SignUp">["navigation"]>();
-  const form = useForm<IEmailSignUpForm>({
-    resolver: zodResolver(sign_up_form_schema),
+  const navigation = useNavigation<MainRouterScreenProps<"SignIn">["navigation"]>();
+  const form = useForm<IEmailSignInForm>({
+    resolver: zodResolver(signin_up_form_schema),
     defaultValues: {
       email: "",
       password: "",
@@ -37,9 +38,9 @@ export const SignUpScreen = () => {
 
   /* ******************** Variables ******************** */
   /* ******************** Functions ******************** */
-  const on_sign_up = async (values: IEmailSignUpForm) => {
+  const on_sign_in = async (values: IEmailSignInForm) => {
     try {
-      const [_, error] = await user_service.sign_up(values.email, values.password);
+      const [_, error] = await user_service.sing_in(values.email, values.password);
       if (error) Alert.alert("Error", error);
     } catch (error) {
       Alert.alert("Error", "There was an error signing up. Please try again.");
@@ -53,11 +54,11 @@ export const SignUpScreen = () => {
       <KorFullSpinner spinning={form.formState.isSubmitting} />
       <Logo />
       <KorText weight="bold" size="xl">
-        Create your account
+        Log into your account
       </KorText>
       <FormProvider {...form}>
         <SignUpEmailForm />
-        <KorButton onPress={form.handleSubmit(on_sign_up)}>Sign Up</KorButton>
+        <KorButton onPress={form.handleSubmit(on_sign_in)}>Log In</KorButton>
       </FormProvider>
       <View style={styles.divider_container}>
         <KorDivider />
@@ -65,16 +66,15 @@ export const SignUpScreen = () => {
         <KorDivider />
       </View>
       <KorButton onPress={auth_with_apple} color="tertiary" left_icon={<AntDesign name="apple1" size={font_size_tokens.lg} />}>
-        Continue with Apple
+        Log In with Apple
       </KorButton>
       <KorButton onPress={auth_with_google} color="tertiary" left_icon={<AntDesign name="google" size={font_size_tokens.lg} />}>
-        Continue with Google
+        Log In with Google
       </KorButton>
       {/* <KorButton color="tertiary">Continue with Facebook</KorButton> */}
     </View>
   );
 };
-
 const styles = StyleSheet.create({
   container: {
     flex: 1,
